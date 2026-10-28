@@ -30,7 +30,7 @@
             pkgs.gtk4
             pkgs.libadwaita
             pkgs.gdk-pixbuf
-            pkgs.glib
+            pkgs.glib.out
             pkgs.pango.out
             pkgs.harfbuzz
             pkgs.graphene
@@ -87,7 +87,7 @@
             pkgs.gtk4
             pkgs.libadwaita
             pkgs.gdk-pixbuf
-            pkgs.glib
+            pkgs.glib.out
             pkgs.pango.out
             pkgs.harfbuzz
             pkgs.graphene
