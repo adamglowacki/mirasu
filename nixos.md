@@ -1,6 +1,6 @@
 # Installing Mirasu permanently on NixOS
 
-This makes the `mirasu` command available everywhere and adds an
+This makes the `mirasu` command available everywhere and adds a
 "Mirasu" entry to the GNOME Activities overview / app search, so you
 don't need to `cd` into this repo and run `nix run` by hand.
 
