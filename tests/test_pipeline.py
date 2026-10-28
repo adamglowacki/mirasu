@@ -3,10 +3,10 @@ import subprocess
 import pytest
 from PIL import Image
 
-from orienta.core.db import StateDB
-from orienta.core.pipeline import VerificationError, needs_processing, process_file
-from orienta.core.rotation import Decision
-from orienta.core.scanner import ORIGINALS_BACKUP_DIR_NAME, Kind, scan
+from girasol.core.db import StateDB
+from girasol.core.pipeline import VerificationError, needs_processing, process_file
+from girasol.core.rotation import Decision
+from girasol.core.scanner import ORIGINALS_BACKUP_DIR_NAME, Kind, scan
 
 
 def _entry_for(tmp_path, name):
@@ -100,14 +100,14 @@ def test_process_file_verification_failure_leaves_original_untouched(tmp_path, a
     def _write_garbage(src, dst, rotation):
         dst.write_bytes(b"not a real jpeg")
 
-    monkeypatch.setattr("orienta.core.pipeline.rotate_jpeg", _write_garbage)
+    monkeypatch.setattr("girasol.core.pipeline.rotate_jpeg", _write_garbage)
 
     with pytest.raises(VerificationError):
         process_file(entry, Decision.ROTATE_CW, state_db=None)
 
     assert target.read_bytes() == original_bytes  # untouched
     assert not (tmp_path / ORIGINALS_BACKUP_DIR_NAME).exists()
-    tmp_name = f"{target.stem}.orienta-tmp{target.suffix}"
+    tmp_name = f"{target.stem}.girasol-tmp{target.suffix}"
     assert not (tmp_path / tmp_name).exists()  # temp file cleaned up
 
 

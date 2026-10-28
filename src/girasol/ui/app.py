@@ -13,10 +13,10 @@ from ..core.triage import TriageSession  # noqa: E402
 from .process_window import ProcessWindow  # noqa: E402
 from .triage_window import TriageWindow  # noqa: E402
 
-APPLICATION_ID = "org.orienta.Orienta"
+APPLICATION_ID = "org.girasol.Girasol"
 
 
-class OrientaApplication(Adw.Application):
+class GirasolApplication(Adw.Application):
     def __init__(
         self, directory: Path | None, recursive: bool = False, db_path: Path | None = None
     ):

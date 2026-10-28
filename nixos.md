@@ -1,7 +1,7 @@
-# Installing Orienta permanently on NixOS
+# Installing Girasol permanently on NixOS
 
-This makes the `orienta` command available everywhere and adds an
-"Orienta" entry to the GNOME Activities overview / app search, so you
+This makes the `girasol` command available everywhere and adds an
+"Girasol" entry to the GNOME Activities overview / app search, so you
 don't need to `cd` into this repo and run `nix run` by hand.
 
 ## home-manager
@@ -10,7 +10,7 @@ Add the package to `home.packages` in your `home.nix`:
 
 ```nix
 home.packages = [
-  (builtins.getFlake "/home/ai/orienta").packages.${builtins.currentSystem}.default
+  (builtins.getFlake "/home/ai/girasol").packages.${builtins.currentSystem}.default
 ];
 ```
 
@@ -27,7 +27,7 @@ Add the same package to `environment.systemPackages` in
 
 ```nix
 environment.systemPackages = [
-  (builtins.getFlake "/home/ai/orienta").packages.${builtins.currentSystem}.default
+  (builtins.getFlake "/home/ai/girasol").packages.${builtins.currentSystem}.default
 ];
 ```
 
@@ -39,14 +39,14 @@ sudo nixos-rebuild switch
 
 ## Using it
 
-- From GNOME: open Activities, search "Orienta", launch it — it opens
+- From GNOME: open Activities, search "Girasol", launch it — it opens
   a folder picker since no path was given on a desktop launch.
-- From a terminal: `orienta /path/to/photos` (add `--recursive` to
+- From a terminal: `girasol /path/to/photos` (add `--recursive` to
   include subdirectories) still works exactly as before.
 
 ## Caveat: the local path
 
-`builtins.getFlake "/home/ai/orienta"` pins the install to this exact
+`builtins.getFlake "/home/ai/girasol"` pins the install to this exact
 clone's path on disk. If you move or delete this directory, the
 home-manager/NixOS config referencing it will fail to build.
 

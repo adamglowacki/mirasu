@@ -1,4 +1,4 @@
-from orienta.core.scanner import Kind, classify, scan
+from girasol.core.scanner import Kind, classify, scan
 
 
 def test_classify_extensions():
@@ -38,7 +38,7 @@ def test_scan_recursive(tmp_path):
 
 def test_scan_skips_backup_folder(tmp_path):
     (tmp_path / "a.jpg").write_bytes(b"x")
-    backup = tmp_path / ".orienta-originals"
+    backup = tmp_path / ".girasol-originals"
     backup.mkdir()
     (backup / "a.jpg").write_bytes(b"old")
 

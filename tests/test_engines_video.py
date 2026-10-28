@@ -3,9 +3,9 @@ import subprocess
 import pytest
 from PIL import Image
 
-from orienta.core.engines.video import UnsupportedCodecError, rotate_video
-from orienta.core.metadata import VideoInfo, read_video_info
-from orienta.core.rotation import Rotation
+from girasol.core.engines.video import UnsupportedCodecError, rotate_video
+from girasol.core.metadata import VideoInfo, read_video_info
+from girasol.core.rotation import Rotation
 
 
 def _is_reddish(px):

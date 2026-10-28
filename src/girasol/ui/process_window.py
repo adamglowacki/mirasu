@@ -14,7 +14,7 @@ class ProcessWindow(Adw.ApplicationWindow):
     """Runs the batch rotation in a background thread with live progress."""
 
     def __init__(self, application, session: TriageSession, process_file_fn, **kwargs):
-        super().__init__(application=application, title="Orienta — Processing", **kwargs)
+        super().__init__(application=application, title="Girasol — Processing", **kwargs)
         self.session = session
         self._process_file_fn = process_file_fn
         self.set_default_size(700, 500)

@@ -1,4 +1,4 @@
-from orienta.core.rotation import (
+from girasol.core.rotation import (
     Decision,
     Rotation,
     effective_image_rotation,

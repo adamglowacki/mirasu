@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 
-ORIGINALS_BACKUP_DIR_NAME = ".orienta-originals"
+ORIGINALS_BACKUP_DIR_NAME = ".girasol-originals"
 
 
 class Kind(Enum):

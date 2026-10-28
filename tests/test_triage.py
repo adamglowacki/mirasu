@@ -1,11 +1,11 @@
-from orienta.core.db import StateDB
-from orienta.core.rotation import Decision
-from orienta.core.scanner import Kind
-from orienta.core.triage import TriageSession
+from girasol.core.db import StateDB
+from girasol.core.rotation import Decision
+from girasol.core.scanner import Kind
+from girasol.core.triage import TriageSession
 
 
 def _entries(tmp_path, names):
-    from orienta.core.scanner import FileEntry
+    from girasol.core.scanner import FileEntry
 
     for name in names:
         (tmp_path / name).write_bytes(b"x")

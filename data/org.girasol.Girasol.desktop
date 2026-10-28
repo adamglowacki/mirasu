@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
-Name=Orienta
+Name=Girasol
 Comment=Triage and fix rotation on photos and videos
-Exec=orienta
-Icon=org.orienta.Orienta
+Exec=girasol
+Icon=org.girasol.Girasol
 Terminal=false
 Categories=Graphics;Photography;Utility;
 StartupNotify=true

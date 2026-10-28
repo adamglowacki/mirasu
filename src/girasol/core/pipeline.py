@@ -2,7 +2,7 @@
 
 Nothing overwrites the original until the engine's output has passed a
 verification check. On success the original is moved into a
-``.orienta-originals`` backup folder and the new file takes its name; on
+``.girasol-originals`` backup folder and the new file takes its name; on
 failure the original is left exactly as it was and the temp output is
 removed.
 """
@@ -112,7 +112,7 @@ def process_file(
             state_db.mark_processed(entry.path, entry.size, entry.mtime_ns)
         return ProcessResult(entry=entry, processed=False)
 
-    tmp_dst = entry.path.with_name(f"{entry.path.stem}.orienta-tmp{entry.path.suffix}")
+    tmp_dst = entry.path.with_name(f"{entry.path.stem}.girasol-tmp{entry.path.suffix}")
     try:
         _rotate_to_temp(entry, decision, tmp_dst)
         _verify(entry, tmp_dst)

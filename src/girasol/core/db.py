@@ -27,7 +27,7 @@ def default_db_path() -> Path:
     import os
 
     state_home = os.environ.get("XDG_STATE_HOME") or str(Path.home() / ".local" / "state")
-    return Path(state_home) / "orienta" / "orienta.db"
+    return Path(state_home) / "girasol" / "girasol.db"
 
 
 class StateDB:

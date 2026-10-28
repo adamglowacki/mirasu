@@ -1,5 +1,5 @@
 {
-  description = "Orienta - lossless photo/video rotation triage tool";
+  description = "Girasol - lossless photo/video rotation triage tool";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -41,7 +41,7 @@
         in
         {
           default = pkgs.stdenvNoCC.mkDerivation {
-            pname = "orienta";
+            pname = "girasol";
             version = "0.1.0";
             src = ./.;
 
@@ -53,17 +53,17 @@
             installPhase = ''
               runHook preInstall
 
-              mkdir -p $out/share/orienta
-              cp -r ${./src}/orienta $out/share/orienta/orienta
+              mkdir -p $out/share/girasol
+              cp -r ${./src}/girasol $out/share/girasol/girasol
 
-              install -Dm644 ${./data/org.orienta.Orienta.desktop} \
-                $out/share/applications/org.orienta.Orienta.desktop
-              install -Dm644 ${./data/icons/org.orienta.Orienta.svg} \
-                $out/share/icons/hicolor/scalable/apps/org.orienta.Orienta.svg
+              install -Dm644 ${./data/org.girasol.Girasol.desktop} \
+                $out/share/applications/org.girasol.Girasol.desktop
+              install -Dm644 ${./data/icons/org.girasol.Girasol.svg} \
+                $out/share/icons/hicolor/scalable/apps/org.girasol.Girasol.svg
 
-              makeWrapper ${pythonEnv}/bin/python3 $out/bin/orienta \
-                --add-flags "-m orienta.main" \
-                --prefix PYTHONPATH : "$out/share/orienta" \
+              makeWrapper ${pythonEnv}/bin/python3 $out/bin/girasol \
+                --add-flags "-m girasol.main" \
+                --prefix PYTHONPATH : "$out/share/girasol" \
                 --prefix PATH : "${pkgs.lib.makeBinPath runtimeDeps}" \
                 --prefix GI_TYPELIB_PATH : "${giTypelibPath}"
 
@@ -75,7 +75,7 @@
       apps = forAllSystems (system: {
         default = {
           type = "app";
-          program = "${self.packages.${system}.default}/bin/orienta";
+          program = "${self.packages.${system}.default}/bin/girasol";
         };
       });
 

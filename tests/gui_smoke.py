@@ -19,8 +19,8 @@ from gi.repository import GLib  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from orienta.core.rotation import Decision  # noqa: E402
-from orienta.ui.app import OrientaApplication  # noqa: E402
+from girasol.core.rotation import Decision  # noqa: E402
+from girasol.ui.app import GirasolApplication  # noqa: E402
 
 errors: list[str] = []
 
@@ -32,7 +32,7 @@ def make_sample_dir() -> Path:
 
     pillow_heif.register_heif_opener()
 
-    d = Path(tempfile.mkdtemp(prefix="orienta-smoke-"))
+    d = Path(tempfile.mkdtemp(prefix="girasol-smoke-"))
     img = Image.new("RGB", (64, 32), "blue")
     img.save(d / "a.jpg", format="JPEG")
     img.save(d / "b.heic", format="HEIF", quality=-1)
@@ -50,7 +50,7 @@ def make_sample_dir() -> Path:
 
 def main() -> int:
     sample_dir = make_sample_dir()
-    app = OrientaApplication(sample_dir, recursive=False, db_path=sample_dir / "state.db")
+    app = GirasolApplication(sample_dir, recursive=False, db_path=sample_dir / "state.db")
 
     state = {"phase": "waiting_for_triage"}
 
