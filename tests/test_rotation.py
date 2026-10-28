@@ -1,4 +1,4 @@
-from girasol.core.rotation import (
+from mirasu.core.rotation import (
     Decision,
     Rotation,
     effective_image_rotation,

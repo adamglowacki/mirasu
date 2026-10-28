@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
-Name=Girasol
+Name=Mirasu
 Comment=Triage and fix rotation on photos and videos
-Exec=girasol
-Icon=org.girasol.Girasol
+Exec=mirasu
+Icon=org.mirasu.Mirasu
 Terminal=false
 Categories=Graphics;Photography;Utility;
 StartupNotify=true

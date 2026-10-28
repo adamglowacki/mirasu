@@ -15,7 +15,7 @@ from gi.repository import GdkPixbuf  # noqa: E402
 
 from ..core.scanner import FileEntry, Kind  # noqa: E402
 
-_CACHE_DIR = Path(tempfile.gettempdir()) / "girasol-preview-cache"
+_CACHE_DIR = Path(tempfile.gettempdir()) / "mirasu-preview-cache"
 
 
 def _cache_path(entry: FileEntry, suffix: str) -> Path:

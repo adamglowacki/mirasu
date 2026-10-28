@@ -1,11 +1,11 @@
-from girasol.core.db import StateDB
-from girasol.core.rotation import Decision
-from girasol.core.scanner import Kind
-from girasol.core.triage import TriageSession
+from mirasu.core.db import StateDB
+from mirasu.core.rotation import Decision
+from mirasu.core.scanner import Kind
+from mirasu.core.triage import TriageSession
 
 
 def _entries(tmp_path, names):
-    from girasol.core.scanner import FileEntry
+    from mirasu.core.scanner import FileEntry
 
     for name in names:
         (tmp_path / name).write_bytes(b"x")

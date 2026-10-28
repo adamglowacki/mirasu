@@ -1,9 +1,9 @@
 import pytest
 from PIL import Image
 
-from girasol.core.engines.jpeg import rotate_jpeg
-from girasol.core.metadata import read_exif_orientation
-from girasol.core.rotation import Rotation
+from mirasu.core.engines.jpeg import rotate_jpeg
+from mirasu.core.metadata import read_exif_orientation
+from mirasu.core.rotation import Rotation
 
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)

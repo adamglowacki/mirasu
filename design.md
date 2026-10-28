@@ -1,4 +1,4 @@
-# Girasol — Design Document
+# Mirasu — Design Document
 
 ## Problem
 
@@ -8,7 +8,7 @@ not video; some "rotate" by writing an orientation flag (EXIF `Orientation`,
 or an MP4/MOV display-matrix `rotate` tag) that only cooperating viewers
 honor, leaving the pixels themselves untouched.
 
-Girasol lets you triage a directory of files with a single keystroke per
+Mirasu lets you triage a directory of files with a single keystroke per
 file (OK / rotate 90° CW / rotate 90° CCW / rotate 180°), then bakes the
 rotation into the actual pixel data — not just a tag — without introducing
 quality loss or audio/video desync, and without touching your originals
@@ -30,7 +30,7 @@ batch-import from cameras/cards, cloud sync.
 ### Phase 1 — Triage
 
 1. Pick a directory (optionally recursive).
-2. Girasol scans every supported file, reads any *existing* orientation
+2. Mirasu scans every supported file, reads any *existing* orientation
    signal (EXIF `Orientation` for JPEG/HEIC, the QuickTime/ISOBMFF display
    matrix `rotate` tag for MP4/MOV via `ffprobe`), and renders a preview
    **already corrected for that existing tag** — so what you see is what a
@@ -60,7 +60,7 @@ batch-import from cameras/cards, cloud sync.
   OK **and** no existing orientation tag. That's the common case and those
   files are left completely untouched.
 - A file marked OK that still carries an existing EXIF/display-matrix
-  rotation tag is **not** a no-op — the whole point of Girasol is that a
+  rotation tag is **not** a no-op — the whole point of Mirasu is that a
   tag-only rotation isn't good enough, so even an "already looks right"
   file gets reprocessed to bake that tag's rotation into real pixels and
   drop the tag.
@@ -70,13 +70,13 @@ batch-import from cameras/cards, cloud sync.
 - The output is verified (dimensions, duration, frame count, presence of an
   audio stream, as applicable) before anything happens to the original.
 - Only after verification: the original is moved into a
-  `.girasol-originals/` backup folder inside the same directory, and the new
+  `.mirasu-originals/` backup folder inside the same directory, and the new
   file takes the original's name. If verification fails, the original is
   left alone and the file is flagged for inspection — nothing is silently
   overwritten.
 - A progress screen shows per-file status and a running log. You delete the
-  `.girasol-originals/` backups yourself once you're satisfied with the
-  results — Girasol never deletes them automatically.
+  `.mirasu-originals/` backups yourself once you're satisfied with the
+  results — Mirasu never deletes them automatically.
 
 ## Rotation engines
 
@@ -155,7 +155,7 @@ Key points:
 
 ## Composing existing tags with your decision
 
-For every file, Girasol computes:
+For every file, Mirasu computes:
 
 ```
 effective_rotation = existing_tag_rotation ⊕ your_marked_rotation
@@ -169,10 +169,10 @@ account for a tag you can't see.
 
 ## Persistence / state
 
-- SQLite database at `~/.local/state/girasol/girasol.db`.
+- SQLite database at `~/.local/state/mirasu/mirasu.db`.
 - Row key: `(absolute_path, size, mtime)` — so edits to a file between scans
   invalidate its cached decision rather than silently reusing a stale one.
-- Per-run log file under `~/.local/state/girasol/logs/`.
+- Per-run log file under `~/.local/state/mirasu/logs/`.
 
 ## Architecture
 
@@ -184,7 +184,7 @@ This is what makes the core exhaustively unit- and integration-testable
 without needing to drive the GUI event loop.
 
 ```
-girasol/
+mirasu/
   core/
     db.py          SQLite state (decisions, resumability)
     scanner.py      directory walk, file classification

@@ -1,6 +1,6 @@
 import subprocess
 
-from girasol.core.metadata import read_exif_orientation, read_video_info
+from mirasu.core.metadata import read_exif_orientation, read_video_info
 
 
 def test_read_exif_orientation_default_is_1(asymmetric_jpeg):

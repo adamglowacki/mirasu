@@ -3,9 +3,9 @@ import subprocess
 import pytest
 from PIL import Image
 
-from girasol.core.engines.video import UnsupportedCodecError, rotate_video
-from girasol.core.metadata import VideoInfo, read_video_info
-from girasol.core.rotation import Rotation
+from mirasu.core.engines.video import UnsupportedCodecError, rotate_video
+from mirasu.core.metadata import VideoInfo, read_video_info
+from mirasu.core.rotation import Rotation
 
 
 def _is_reddish(px):

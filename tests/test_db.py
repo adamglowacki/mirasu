@@ -1,5 +1,5 @@
-from girasol.core.db import StateDB
-from girasol.core.rotation import Decision
+from mirasu.core.db import StateDB
+from mirasu.core.rotation import Decision
 
 
 def test_set_and_get_decision(tmp_path):

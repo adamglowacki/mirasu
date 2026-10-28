@@ -4,9 +4,9 @@ import pillow_heif
 import pytest
 from PIL import Image
 
-from girasol.core.engines.heic import rotate_heic
-from girasol.core.metadata import read_exif_orientation
-from girasol.core.rotation import Rotation
+from mirasu.core.engines.heic import rotate_heic
+from mirasu.core.metadata import read_exif_orientation
+from mirasu.core.rotation import Rotation
 
 pillow_heif.register_heif_opener()
 

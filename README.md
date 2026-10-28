@@ -1,4 +1,4 @@
-# Girasol
+# Mirasu
 
 Fast, keyboard-driven triage for photos and videos that need their
 rotation physically fixed - not just tagged. See [design.md](design.md)
@@ -19,7 +19,7 @@ nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 ## Running
 
-From inside this directory (`/home/ai/girasol`):
+From inside this directory (`/home/ai/mirasu`):
 
 ```
 nix run . -- /path/to/photos
@@ -44,7 +44,7 @@ Add it to your NixOS system packages or home-manager config, e.g. in
 
 ```nix
 home.packages = [
-  (builtins.getFlake "/home/ai/girasol").packages.${builtins.currentSystem}.default
+  (builtins.getFlake "/home/ai/mirasu").packages.${builtins.currentSystem}.default
 ];
 ```
 
@@ -54,20 +54,20 @@ machine doesn't depend on the clone staying in place.)
 
 Then run `home-manager switch` (or rebuild your NixOS system if you added
 it to `environment.systemPackages` instead). This installs both the
-`girasol` command and a desktop entry, so Girasol also shows up in the
+`mirasu` command and a desktop entry, so Mirasu also shows up in the
 GNOME Activities/App Grid search — launching it from there opens a
 folder picker instead of requiring a path on the command line:
 
 ```
-girasol /path/to/photos   # still works from a terminal, too
-girasol                   # or just launch it and pick a folder
+mirasu /path/to/photos   # still works from a terminal, too
+mirasu                   # or just launch it and pick a folder
 ```
 
-### Development mode (editable source, for working on Girasol itself)
+### Development mode (editable source, for working on Mirasu itself)
 
 ```
 nix develop
-python3 -m girasol.main /path/to/photos
+python3 -m mirasu.main /path/to/photos
 ```
 
 ## Triage keys
@@ -85,7 +85,7 @@ Decisions save continuously; quitting and reopening the same directory
 resumes where you left off. After the last file, review the summary and
 click **Start processing**.
 
-Originals are moved into a `.girasol-originals/` folder next to them only
+Originals are moved into a `.mirasu-originals/` folder next to them only
 after the rotated output is verified - delete that folder yourself once
 you're happy with the results.
 

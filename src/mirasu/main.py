@@ -1,4 +1,4 @@
-"""Entry point: `girasol <directory> [--recursive]`."""
+"""Entry point: `mirasu <directory> [--recursive]`."""
 
 import argparse
 import sys
@@ -6,12 +6,12 @@ from pathlib import Path
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="girasol")
+    parser = argparse.ArgumentParser(prog="mirasu")
     parser.add_argument(
         "directory",
         type=Path,
         nargs="?",
-        help="Directory of photos/videos to triage. If omitted, Girasol asks for one.",
+        help="Directory of photos/videos to triage. If omitted, Mirasu asks for one.",
     )
     parser.add_argument(
         "--recursive", action="store_true", help="Scan the directory recursively"
@@ -29,9 +29,9 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Not a directory: {directory}", file=sys.stderr)
             return 1
 
-    from .ui.app import GirasolApplication
+    from .ui.app import MirasuApplication
 
-    app = GirasolApplication(directory, recursive=args.recursive)
+    app = MirasuApplication(directory, recursive=args.recursive)
     return app.run([])
 
 

@@ -29,7 +29,7 @@ class TriageWindow(Adw.ApplicationWindow):
     """The triage screen: one file at a time, one keystroke per decision."""
 
     def __init__(self, application, session: TriageSession, on_finished=None, **kwargs):
-        super().__init__(application=application, title="Girasol", **kwargs)
+        super().__init__(application=application, title="Mirasu", **kwargs)
         self.session = session
         self.on_finished = on_finished
         self._start_button = None

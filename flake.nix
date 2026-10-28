@@ -1,5 +1,5 @@
 {
-  description = "Girasol - lossless photo/video rotation triage tool";
+  description = "Mirasu - lossless photo/video rotation triage tool";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -41,7 +41,7 @@
         in
         {
           default = pkgs.stdenvNoCC.mkDerivation {
-            pname = "girasol";
+            pname = "mirasu";
             version = "0.1.0";
             src = ./.;
 
@@ -53,17 +53,17 @@
             installPhase = ''
               runHook preInstall
 
-              mkdir -p $out/share/girasol
-              cp -r ${./src}/girasol $out/share/girasol/girasol
+              mkdir -p $out/share/mirasu
+              cp -r ${./src}/mirasu $out/share/mirasu/mirasu
 
-              install -Dm644 ${./data/org.girasol.Girasol.desktop} \
-                $out/share/applications/org.girasol.Girasol.desktop
-              install -Dm644 ${./data/icons/org.girasol.Girasol.svg} \
-                $out/share/icons/hicolor/scalable/apps/org.girasol.Girasol.svg
+              install -Dm644 ${./data/org.mirasu.Mirasu.desktop} \
+                $out/share/applications/org.mirasu.Mirasu.desktop
+              install -Dm644 ${./data/icons/org.mirasu.Mirasu.svg} \
+                $out/share/icons/hicolor/scalable/apps/org.mirasu.Mirasu.svg
 
-              makeWrapper ${pythonEnv}/bin/python3 $out/bin/girasol \
-                --add-flags "-m girasol.main" \
-                --prefix PYTHONPATH : "$out/share/girasol" \
+              makeWrapper ${pythonEnv}/bin/python3 $out/bin/mirasu \
+                --add-flags "-m mirasu.main" \
+                --prefix PYTHONPATH : "$out/share/mirasu" \
                 --prefix PATH : "${pkgs.lib.makeBinPath runtimeDeps}" \
                 --prefix GI_TYPELIB_PATH : "${giTypelibPath}"
 
@@ -75,7 +75,7 @@
       apps = forAllSystems (system: {
         default = {
           type = "app";
-          program = "${self.packages.${system}.default}/bin/girasol";
+          program = "${self.packages.${system}.default}/bin/mirasu";
         };
       });
 
