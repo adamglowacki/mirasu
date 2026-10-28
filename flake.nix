@@ -56,6 +56,11 @@
               mkdir -p $out/share/orienta
               cp -r ${./src}/orienta $out/share/orienta/orienta
 
+              install -Dm644 ${./data/org.orienta.Orienta.desktop} \
+                $out/share/applications/org.orienta.Orienta.desktop
+              install -Dm644 ${./data/icons/org.orienta.Orienta.svg} \
+                $out/share/icons/hicolor/scalable/apps/org.orienta.Orienta.svg
+
               makeWrapper ${pythonEnv}/bin/python3 $out/bin/orienta \
                 --add-flags "-m orienta.main" \
                 --prefix PYTHONPATH : "$out/share/orienta" \

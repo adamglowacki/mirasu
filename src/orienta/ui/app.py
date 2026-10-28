@@ -4,7 +4,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw  # noqa: E402
+from gi.repository import Adw, Gio, GLib, Gtk  # noqa: E402
 
 from ..core.db import StateDB, default_db_path  # noqa: E402
 from ..core.pipeline import process_file  # noqa: E402
@@ -17,7 +17,9 @@ APPLICATION_ID = "org.orienta.Orienta"
 
 
 class OrientaApplication(Adw.Application):
-    def __init__(self, directory: Path, recursive: bool = False, db_path: Path | None = None):
+    def __init__(
+        self, directory: Path | None, recursive: bool = False, db_path: Path | None = None
+    ):
         super().__init__(application_id=APPLICATION_ID)
         self.directory = directory
         self.recursive = recursive
@@ -26,7 +28,26 @@ class OrientaApplication(Adw.Application):
         self._process_window = None
 
     def do_activate(self) -> None:
-        entries = scan(self.directory, recursive=self.recursive)
+        if self.directory is None:
+            self._prompt_for_directory()
+        else:
+            self._start_triage(self.directory)
+
+    def _prompt_for_directory(self) -> None:
+        dialog = Gtk.FileDialog(title="Choose a folder to triage")
+
+        def on_chosen(dlg: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
+            try:
+                folder = dlg.select_folder_finish(result)
+            except GLib.Error:
+                self.quit()
+                return
+            self._start_triage(Path(folder.get_path()))
+
+        dialog.select_folder(None, None, on_chosen)
+
+    def _start_triage(self, directory: Path) -> None:
+        entries = scan(directory, recursive=self.recursive)
         state_db = StateDB(self.db_path)
         session = TriageSession(entries, state_db)
 

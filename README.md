@@ -19,7 +19,7 @@ nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 ## Running
 
-From inside this directory (`/home/ai/qrocs`):
+From inside this directory (`/home/ai/orienta`):
 
 ```
 nix run . -- /path/to/photos
@@ -37,21 +37,30 @@ nix run github:<your-username>/<your-repo> -- /path/to/photos
 
 (only works once this directory is pushed to a git remote).
 
-### Installing permanently (so `orienta` is just a command)
+### Installing permanently (command + GNOME menu entry)
 
 Add it to your NixOS system packages or home-manager config, e.g. in
 `home.nix`:
 
 ```nix
 home.packages = [
-  (builtins.getFlake "/home/ai/qrocs").packages.${builtins.currentSystem}.default
+  (builtins.getFlake "/home/ai/orienta").packages.${builtins.currentSystem}.default
 ];
 ```
 
-then after `home-manager switch`, just run:
+(swap in `builtins.fetchGit { url = "..."; ref = "main"; }` or a flake
+input instead of a local path once this repo lives on a remote, so the
+machine doesn't depend on the clone staying in place.)
+
+Then run `home-manager switch` (or rebuild your NixOS system if you added
+it to `environment.systemPackages` instead). This installs both the
+`orienta` command and a desktop entry, so Orienta also shows up in the
+GNOME Activities/App Grid search — launching it from there opens a
+folder picker instead of requiring a path on the command line:
 
 ```
-orienta /path/to/photos
+orienta /path/to/photos   # still works from a terminal, too
+orienta                   # or just launch it and pick a folder
 ```
 
 ### Development mode (editable source, for working on Orienta itself)

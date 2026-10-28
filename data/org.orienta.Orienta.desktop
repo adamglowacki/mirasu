@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Orienta
+Comment=Triage and fix rotation on photos and videos
+Exec=orienta
+Icon=org.orienta.Orienta
+Terminal=false
+Categories=Graphics;Photography;Utility;
+StartupNotify=true
