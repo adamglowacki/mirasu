@@ -34,6 +34,7 @@ class StateDB:
     def __init__(self, db_path: Path):
         db_path = Path(db_path)
         db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.path = db_path
         self._conn = sqlite3.connect(str(db_path))
         self._conn.executescript(_SCHEMA)
         self._conn.commit()

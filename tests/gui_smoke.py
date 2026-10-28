@@ -78,6 +78,11 @@ def main() -> int:
                     raise AssertionError("process window was not created")
                 if pw._done < len(pw._to_process):
                     return True  # keep polling
+                log = pw.log_buffer.get_text(
+                    pw.log_buffer.get_start_iter(), pw.log_buffer.get_end_iter(), False
+                )
+                if "FAILED" in log:
+                    raise AssertionError(f"processing reported failures:\n{log}")
                 state["phase"] = "done"
                 GLib.idle_add(app.quit)
                 return False

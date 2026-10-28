@@ -6,6 +6,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, GLib, Gtk  # noqa: E402
 
+from ..core.db import StateDB  # noqa: E402
 from ..core.triage import TriageSession  # noqa: E402
 
 
@@ -63,17 +64,25 @@ class ProcessWindow(Adw.ApplicationWindow):
         return False
 
     def _run(self) -> None:
-        for entry, decision in self._to_process:
-            try:
-                result = self._process_file_fn(entry, decision, self.session.state_db)
-                if result.processed:
-                    self._log(f"rotated   {entry.path.name}")
-                else:
-                    self._log(f"unchanged {entry.path.name}")
-            except Exception as exc:  # noqa: BLE001 - keep going, report, move on
-                self._log(f"FAILED    {entry.path.name}: {exc}")
+        # sqlite3 connections can't cross threads, so this thread gets its own
+        # StateDB rather than reusing the one the GTK main thread created.
+        state_db = StateDB(self.session.state_db.path)
+        try:
+            for entry, decision in self._to_process:
+                try:
+                    result = self._process_file_fn(entry, decision, state_db)
+                    if result.processed:
+                        self._log(f"rotated   {entry.path.name}")
+                    else:
+                        self._log(f"unchanged {entry.path.name}")
+                except Exception as exc:  # noqa: BLE001 - keep going, report, move on
+                    self._log(f"FAILED    {entry.path.name}: {exc}")
 
-            self._done += 1
-            self._set_progress(self._done / self._total, f"{self._done} / {len(self._to_process)}")
+                self._done += 1
+                self._set_progress(
+                    self._done / self._total, f"{self._done} / {len(self._to_process)}"
+                )
+        finally:
+            state_db.close()
 
         self._log("Done.")
