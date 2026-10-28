@@ -56,9 +56,17 @@ batch-import from cameras/cards, cloud sync.
 
 ### Phase 2 — Processing
 
-- Files marked OK are no-ops — left completely untouched.
-- Each rotate-marked file is processed by a format-specific engine (below)
-  into a **new** output file, written next to the original.
+- A file is a true no-op only if there's *nothing left to bake in*: marked
+  OK **and** no existing orientation tag. That's the common case and those
+  files are left completely untouched.
+- A file marked OK that still carries an existing EXIF/display-matrix
+  rotation tag is **not** a no-op — the whole point of Orienta is that a
+  tag-only rotation isn't good enough, so even an "already looks right"
+  file gets reprocessed to bake that tag's rotation into real pixels and
+  drop the tag.
+- Every other file (rotate-marked, or OK-but-tagged) is processed by a
+  format-specific engine (below) into a **new** output file, written next
+  to the original.
 - The output is verified (dimensions, duration, frame count, presence of an
   audio stream, as applicable) before anything happens to the original.
 - Only after verification: the original is moved into a
@@ -128,11 +136,15 @@ Key points:
   never re-encoded. Only the video stream's pixels change, so presentation
   timestamps stay aligned to the same timebase — sync is preserved by
   construction, not by after-the-fact correction.
-- If the source already carries a rotation matrix/`rotate` tag, the engine
-  **composes** that tag's rotation with your marked rotation into a single
-  combined transform and applies it in **one** ffmpeg pass — never a
-  tag-correction pass followed by a separate user-rotation pass, which
-  would otherwise cost a second, unnecessary re-encode generation.
+- If the source already carries a rotation matrix/`rotate` tag, that part is
+  deliberately **not** hand-computed: ffmpeg's demuxer auto-applies a
+  stream's display-matrix rotation whenever a filtergraph is in use (its
+  `-autorotate` behavior, on by default). The engine only adds its own
+  `transpose` filter for your marked decision on top of that, so the tag's
+  rotation and your decision are still baked in together in a **single**
+  ffmpeg pass — it just avoids reimplementing ffmpeg's own
+  (notoriously sign-ambiguous) display-matrix math, reusing well-tested
+  code instead of a hand-rolled equivalent.
 - Quality target is "visually lossless, size-preserving" (per your
   decision): CRF tuned per codec family (x264 ≈ 16, x265 ≈ 18 by default,
   configurable) rather than mathematically-lossless mode, to keep output
